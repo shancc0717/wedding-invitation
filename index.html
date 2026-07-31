@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>嘉铭 &amp; 语晴 — 婚礼邀请函</title>
+<meta name="description" content="诚挚邀请您见证我们的婚礼 · 2026年10月1日 · 杭州">
+<meta name="theme-color" content="#fdfaf6">
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS  ·  Champagne Gold × Misty Rose × Ivory
+   ══════════════════════════════════════════════════════════════════════════ */
+:root{
+  --ink:#3a2f2c; --ink-soft:#8b7a71;
+  --gold:#c09a68; --gold-deep:#9c7442;
+  --rose:#dba9a2; --rose-soft:#f4e3df;
+  --line:rgba(160,125,90,.24);
+  --glass:rgba(255,255,255,.42);
+  --f-serif:"Noto Serif SC","Songti SC","STSong","SimSun",Georgia,serif;
+  --f-sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow:0 24px 70px -26px rgba(120,85,55,.34);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-sans);color:var(--ink);line-height:1.8;
+  background:#fdfaf6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.lock{overflow:hidden;height:100svh}
+img{display:block;max-width:100%}
+::selection{background:var(--rose-soft);color:var(--gold-deep)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ── 层 1：WebGL 流动丝绸背景（常驻） ───────────────────────────────── */
+#silk{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+/* 丝绸不可用时的静态兜底 */
+#silk.dead{background:
+  radial-gradient(1200px 700px at 18% 8%,#fbf3ec,transparent 62%),
+  radial-gradient(900px 600px at 82% 88%,#f4e2dd,transparent 60%),
+  linear-gradient(160deg,#fdfaf6,#f5e9de)}
+
+/* ── 层 2：极细颗粒（静态，无抖动） ────────────────────────────────── */
+#grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.24;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.34'/></svg>");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   载入门 · 信封
+   ══════════════════════════════════════════════════════════════════════════ */
+#loader{
+  position:fixed;inset:0;z-index:100;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#f9f1e9,#f2e1d8 58%,#eedcd3);
+  transition:opacity 1.1s var(--ease),visibility 1.1s;
+}
+#loader.gone{opacity:0;visibility:hidden}
+.env{
+  width:min(72vw,326px);aspect-ratio:3/2;position:relative;perspective:1300px;
+  filter:drop-shadow(0 26px 44px rgba(140,100,70,.26));
+}
+.env.ready{cursor:pointer}
+.env-b{
+  position:absolute;inset:0;border-radius:6px;overflow:hidden;
+  background:linear-gradient(160deg,#fffaf4,#f7e9dc);border:1px solid var(--line);
+}
+.env-b::before,.env-b::after{
+  content:"";position:absolute;bottom:0;width:52%;height:100%;
+  background:linear-gradient(140deg,#fbf1e6,#f3e2d2);
+}
+.env-b::before{left:0;clip-path:polygon(0 0,100% 100%,0 100%)}
+.env-b::after{right:0;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.env-f{
+  position:absolute;top:0;left:0;width:100%;height:56%;z-index:3;
+  background:linear-gradient(180deg,#f9ecdf,#f2dccb);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;transition:transform 1.05s var(--ease);
+  border-bottom:1px solid rgba(160,125,90,.18);
+}
+.env.open .env-f{transform:rotateX(-176deg)}
+.env-card{
+  position:absolute;left:8%;bottom:9%;width:84%;height:82%;z-index:2;
+  background:#fffdfa;border:1px solid var(--line);border-radius:4px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  transition:transform .95s var(--ease) .3s;
+}
+.env.open .env-card{transform:translateY(-54%)}
+.env-card small{font-size:10.5px;letter-spacing:.38em;color:var(--ink-soft)}
+.env-card b{font-family:var(--f-serif);font-weight:600;font-size:clamp(15px,3.4vw,19px);color:var(--gold-deep);letter-spacing:.16em}
+/* 火漆 · 内嵌载入进度环 */
+.seal{
+  position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:4;
+  width:76px;height:76px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#e6bbb3,#c07a70 58%,#a75f56);
+  box-shadow:0 10px 22px rgba(140,70,60,.32),inset 0 -3px 8px rgba(0,0,0,.18);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
+}
+.env.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+.seal svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.seal circle{fill:none;stroke:rgba(255,255,255,.34);stroke-width:2}
+.seal circle.pg{stroke:#fff6f2;stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:226;transition:stroke-dashoffset .35s linear}
+.seal i{font-style:normal;font-family:var(--f-serif);font-size:25px;color:#fff6f2;letter-spacing:.04em}
+#loadTxt{margin-top:38px;font-size:12px;letter-spacing:.4em;color:var(--gold-deep);min-height:20px;transition:opacity .4s}
+#loadTxt.blink{animation:bk 2.4s ease-in-out infinite}
+@keyframes bk{0%,100%{opacity:.45}50%{opacity:1}}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   舞台 · 七个全屏章节（滚动交叉溶解）
+   ══════════════════════════════════════════════════════════════════════════ */
+#stage{position:fixed;inset:0;z-index:2;overflow:hidden}
+#spacer{position:relative;z-index:-1;pointer-events:none}
+.ch{
+  position:absolute;inset:0;display:grid;place-items:center;
+  padding:clamp(20px,4.5vw,56px);
+  opacity:0;pointer-events:none;
+  will-change:opacity,transform;
+  backface-visibility:hidden;
+}
+.ch.act{pointer-events:auto}
+.wrap{width:100%;max-width:1060px;text-align:center}
+
+/* 章节内元素分级入场 */
+.up{opacity:0;transform:translateY(22px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.ch.on .up{opacity:1;transform:none}
+.ch.on .u1{transition-delay:.10s}
+.ch.on .u2{transition-delay:.20s}
+.ch.on .u3{transition-delay:.30s}
+.ch.on .u4{transition-delay:.40s}
+
+/* 标题组 */
+.cap-en{font-family:var(--f-serif);font-style:italic;font-size:11.5px;letter-spacing:.42em;
+  color:var(--gold);text-transform:uppercase}
+.cap-cn{font-family:var(--f-serif);font-weight:600;font-size:clamp(22px,3.6vw,32px);
+  letter-spacing:.16em;margin-top:6px;color:var(--ink)}
+.orn{display:block;width:104px;height:12px;margin:14px auto 0;overflow:visible}
+.orn path{fill:none;stroke:var(--gold);stroke-width:1;stroke-dasharray:200;stroke-dashoffset:200;
+  transition:stroke-dashoffset 1.4s var(--ease) .25s}
+.ch.on .orn path{stroke-dashoffset:0}
+.orn circle{fill:var(--rose);opacity:0;transition:opacity .5s ease 1.1s}
+.ch.on .orn circle{opacity:1}
+
+/* ── 01 封面 ────────────────────────────────────────────────────────── */
+.kicker{font-family:var(--f-serif);font-style:italic;font-size:clamp(11px,2vw,13px);
+  letter-spacing:.5em;color:var(--gold-deep);text-transform:uppercase}
+.names{
+  font-family:var(--f-serif);font-weight:600;line-height:1.16;
+  font-size:clamp(42px,10.5vw,92px);letter-spacing:.05em;margin:18px 0 14px;
+  color:var(--ink);
+}
+.names span{display:inline-block;opacity:0;transform:translateY(.5em) rotateX(-68deg);
+  transform-origin:bottom center;transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.ch.on .names span{opacity:1;transform:none}
+.names .amp{color:var(--rose);font-style:italic;font-size:.5em;margin:0 .18em;vertical-align:.14em}
+.date{font-family:var(--f-serif);font-size:clamp(13px,2.4vw,17px);letter-spacing:.3em;color:var(--ink-soft)}
+.stem{width:1px;height:52px;margin:26px auto 0;background:linear-gradient(var(--gold),transparent)}
+.badge{position:absolute;top:12%;right:8%;width:clamp(88px,13vw,132px);opacity:.85}
+.badge .ring{animation:spin 26s linear infinite;transform-origin:50% 50%}
+.badge text{font-family:var(--f-serif);font-size:8.2px;letter-spacing:2.5px;fill:var(--gold-deep)}
+.badge circle{fill:none;stroke:var(--rose);stroke-width:.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── 02 倒计时 ─────────────────────────────────────────────────────── */
+.count{display:flex;justify-content:center;gap:clamp(8px,2.4vw,20px);flex-wrap:wrap;margin-top:44px}
+.cd{
+  background:var(--glass);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
+  border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);
+  min-width:clamp(68px,18vw,112px);padding:22px 14px;position:relative;overflow:hidden;
+}
+.cd::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(160,125,90,.12)}
+.cd b{display:block;font-family:var(--f-serif);font-weight:600;
+  font-size:clamp(28px,6vw,44px);line-height:1.25;color:var(--gold-deep);font-variant-numeric:tabular-nums}
+.cd b.flip{animation:flip .48s var(--ease)}
+@keyframes flip{0%{transform:rotateX(-88deg);opacity:.2}100%{transform:none;opacity:1}}
+.cd span{font-size:11.5px;color:var(--ink-soft);letter-spacing:.22em}
+
+/* ── 03 邀请函 ─────────────────────────────────────────────────────── */
+.letter{
+  background:var(--glass);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);
+  border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);
+  padding:clamp(26px,5vw,58px);max-width:700px;margin:34px auto 0;position:relative;
+}
+.letter::before,.letter::after{content:"";position:absolute;width:40px;height:40px;
+  border:1px solid var(--gold);opacity:.5}
+.letter::before{top:13px;left:13px;border-right:0;border-bottom:0;border-radius:6px 0 0 0}
+.letter::after{bottom:13px;right:13px;border-left:0;border-top:0;border-radius:0 0 6px 0}
+.letter .mk{color:var(--rose);font-size:22px;margin-bottom:12px}
+/* 文字遮罩逐行揭示 */
+.rl{overflow:hidden}
+.rl>i{display:block;font-style:normal;font-family:var(--f-serif);
+  font-size:clamp(14px,2.3vw,17.5px);letter-spacing:.09em;line-height:1.95;
+  transform:translateY(105%);transition:transform .9s var(--ease)}
+.ch.on .rl>i{transform:none}
+.ch.on .rl:nth-of-type(1)>i{transition-delay:.15s}
+.ch.on .rl:nth-of-type(2)>i{transition-delay:.25s}
+.ch.on .rl:nth-of-type(3)>i{transition-delay:.35s}
+.ch.on .rl:nth-of-type(4)>i{transition-delay:.45s}
+.ch.on .rl:nth-of-type(5)>i{transition-delay:.55s}
+.rl b{color:var(--gold-deep);font-weight:600}
+.sign{margin-top:20px;font-size:12.5px;letter-spacing:.22em;color:var(--ink-soft)}
+
+/* ── 04 影像 · WebGL 波纹画布 ──────────────────────────────────────── */
+.gal{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:16px}
+/* 错层衬底：制造"装裱"景深，打破单卡的孤立感 */
+.stage{position:relative;display:inline-block}
+.matte{
+  position:absolute;left:15px;top:15px;right:-15px;bottom:-15px;
+  border-radius:24px;z-index:0;transform:rotate(.7deg);
+  background:linear-gradient(150deg,rgba(247,233,228,.55),rgba(235,217,207,.30));
+  border:1px solid var(--line);
+  box-shadow:0 24px 54px -38px rgba(120,90,60,.55);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+}
+.frame{
+  position:relative;z-index:1;width:min(360px,74vw);aspect-ratio:3/4;
+  border-radius:18px;overflow:hidden;
+  border:1px solid rgba(214,196,176,.9);
+  background:linear-gradient(150deg,#f7e9e4,#efdcd2);
+  /* 柔和内外阴影：不再像浮起的贴纸，而像融入丝绸的画框 */
+  box-shadow:0 30px 64px -44px rgba(110,80,55,.6),
+             inset 0 0 0 1px rgba(255,255,255,.35);
+  animation:galFloat 7s ease-in-out infinite;
+}
+@keyframes galFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.frame canvas,.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.frame img{opacity:0;transition:opacity .6s var(--ease)}
+.frame img.show{opacity:1}
+/* 文案淡入淡出 + 轻微上移，去掉瞬切的生硬 */
+.gcap{font-family:var(--f-serif);font-size:14px;letter-spacing:.22em;color:var(--ink-soft);min-height:22px;
+  transition:opacity .42s var(--ease),transform .42s var(--ease)}
+.gdots{display:flex;gap:7px}
+.gdots i{width:5px;height:5px;border-radius:50%;background:rgba(160,125,90,.28);transition:.35s var(--ease)}
+.gdots i.on{background:var(--gold);transform:scale(1.5)}
+.ghint{font-size:11px;letter-spacing:.3em;color:var(--ink-soft);opacity:.7}
+@media (prefers-reduced-motion:reduce){.frame{animation:none}}
+
+/* ── 05 婚礼信息 ───────────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px;margin:36px auto 0}
+.info{
+  background:var(--glass);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
+  border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);
+  padding:30px 22px;transition:transform .5s var(--ease)
+}
+.info .ic{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#fbeae5,#f3ddd7);
+  display:flex;align-items:center;justify-content:center}
+.info .ic svg{width:24px;height:24px;stroke:var(--gold-deep);fill:none;stroke-width:1.4;stroke-linecap:round}
+.info h3{font-family:var(--f-serif);font-size:17px;letter-spacing:.2em;margin-bottom:6px}
+.info .big{font-family:var(--f-serif);font-size:clamp(17px,2.8vw,21px);letter-spacing:.1em;margin:4px 0 6px}
+.info p{color:var(--ink-soft);font-size:13.5px;line-height:1.75}
+.btn{
+  display:inline-block;margin-top:14px;padding:10px 26px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#fff;
+  text-decoration:none;font-size:12.5px;letter-spacing:.22em;
+  box-shadow:0 10px 22px -10px rgba(156,116,66,.85);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 28px -12px rgba(156,116,66,.95)}
+
+/* ── 06 当日流程 ───────────────────────────────────────────────────── */
+.tl{max-width:520px;margin:34px auto 0;position:relative;padding-left:32px;text-align:left}
+.tl>svg{position:absolute;left:0;top:6px;width:12px;height:calc(100% - 12px);overflow:visible}
+.tl>svg path{fill:none;stroke:var(--gold);stroke-width:1.2;opacity:.9;
+  stroke-dasharray:100;stroke-dashoffset:100}
+.stp{position:relative;padding-bottom:22px}
+.stp:last-child{padding-bottom:0}
+.stp::before{content:"";position:absolute;left:-29px;top:10px;width:11px;height:11px;border-radius:50%;
+  background:var(--rose);box-shadow:0 0 0 1px var(--gold),0 0 0 4px rgba(253,250,246,.85);
+  transform:scale(0);transition:transform .5s var(--ease)}
+.stp.lit::before{transform:scale(1)}
+.stp time{font-family:var(--f-serif);font-size:15.5px;color:var(--gold-deep);letter-spacing:.16em}
+.stp h4{font-size:15px;font-weight:600;letter-spacing:.1em;margin:1px 0}
+.stp p{font-size:13px;color:var(--ink-soft)}
+
+/* ── 07 回执 ───────────────────────────────────────────────────────── */
+.rsvp{
+  max-width:700px;margin:32px auto 0;border-radius:30px;padding:38px 24px;
+  background:linear-gradient(160deg,rgba(255,255,255,.58),rgba(244,227,223,.5));
+  backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.rings{display:block;width:92px;height:54px;margin:0 auto 12px;overflow:visible}
+.rings circle{fill:none;stroke:var(--gold);stroke-width:1.4;stroke-dasharray:150;stroke-dashoffset:150;
+  transition:stroke-dashoffset 1.6s var(--ease)}
+.ch.on .rings circle{stroke-dashoffset:0}
+.ch.on .rings circle:nth-child(2){transition-delay:.28s}
+.rsvp p{color:var(--ink-soft);font-size:14px}
+.tels{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.tel{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);
+  font-family:var(--f-serif);font-size:clamp(16px,2.8vw,19px);letter-spacing:.1em;
+  padding:8px 20px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.5);
+  transition:.4s var(--ease)}
+.tel:hover{border-color:var(--gold);transform:translateY(-2px)}
+.tel small{font-family:var(--f-sans);font-size:11.5px;color:var(--ink-soft);letter-spacing:.2em}
+.fin{margin-top:26px;font-size:12px;letter-spacing:.24em;color:var(--ink-soft)}
+.fin .h{color:var(--rose);font-size:16px;display:block;margin-bottom:6px}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   常驻 UI：进度条 / 章节刻度 / 滚动提示
+   ══════════════════════════════════════════════════════════════════════════ */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:40;
+  background:linear-gradient(90deg,var(--rose),var(--gold))}
+#ticks{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;gap:11px}
+#ticks i{width:16px;height:1px;background:rgba(120,90,60,.26);transition:.45s var(--ease)}
+#ticks i.on{width:28px;background:var(--gold-deep)}
+#hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;
+  font-size:10.5px;letter-spacing:.36em;color:var(--gold-deep);
+  transition:opacity .6s var(--ease);animation:bob 2.6s ease-in-out infinite}
+#hint.off{opacity:0;pointer-events:none;animation:none}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.55}50%{transform:translate(-50%,7px);opacity:1}}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   响应式 · 无障碍
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width:760px){
+  .g2{grid-template-columns:1fr;gap:14px}
+  .info{padding:20px 18px;border-radius:22px}
+  .info .ic{width:44px;height:44px;margin-bottom:8px}
+  .info .ic svg{width:20px;height:20px}
+  .badge{top:9%;right:4%;width:80px}
+  .letter{margin-top:24px;border-radius:24px}
+  .frame{width:min(300px,68vw)}
+  .count{margin-top:30px}
+  .tl{margin-top:24px;padding-left:26px}
+  #ticks{right:9px;gap:8px}
+  #ticks i{width:11px}#ticks i.on{width:20px}
+  #grain{opacity:.16}
+}
+@media (max-height:680px){
+  .names{font-size:clamp(34px,9vw,58px);margin:12px 0 10px}
+  .letter{padding:20px 18px}
+  .rl>i{line-height:1.75}
+  .frame{width:min(230px,52vw)}
+  .stp{padding-bottom:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .up,.names span,.rl>i{opacity:1!important;transform:none!important}
+  .orn path,.rings circle{stroke-dashoffset:0!important}
+  .stp::before{transform:scale(1)!important}
+}
+</style>
+</head>
+<body class="lock">
+
+<!-- 层 1 · 丝绸 -->
+<canvas id="silk" aria-hidden="true"></canvas>
+<!-- 层 2 · 颗粒 -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ══════════ 载入门 ══════════ -->
+<div id="loader">
+  <div class="env" id="env" role="button" tabindex="0" aria-label="开启请帖">
+    <div class="env-card">
+      <small>WEDDING INVITATION</small>
+      <!-- ✏️ 修改处：新人姓名 -->
+      <b>陈嘉铭 &amp; 林语晴</b>
+    </div>
+    <div class="env-b"></div>
+    <div class="env-f"></div>
+    <div class="seal">
+      <svg viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="36"/><circle class="pg" id="ring" cx="38" cy="38" r="36"/></svg>
+      <i>囍</i>
+    </div>
+  </div>
+  <p id="loadTxt">0%</p>
+</div>
+
+<!-- ══════════ 舞台 ══════════ -->
+<div id="stage">
+
+  <!-- 01 封面 -->
+  <section class="ch" data-i="0">
+    <svg class="badge" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="cp" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs>
+      <g class="ring"><text><textPath href="#cp" startOffset="0">· SAVE THE DATE · 2026.10.01 · HANGZHOU </textPath></text></g>
+      <circle cx="50" cy="50" r="26"/><circle cx="50" cy="50" r="22" style="stroke:var(--gold);opacity:.5"/>
+    </svg>
+    <div class="wrap">
+      <p class="kicker up u1">Save The Date</p>
+      <!-- ✏️ 修改处：新人姓名 -->
+      <h1 class="names" data-split>陈嘉铭&amp;林语晴</h1>
+      <!-- ✏️ 修改处：日期 -->
+      <p class="date up u3">2026 · 10 · 01 &nbsp;星期四&nbsp;·&nbsp;农历八月廿一</p>
+      <div class="stem up u4"></div>
+    </div>
+  </section>
+
+  <!-- 02 倒计时 -->
+  <section class="ch" data-i="1">
+    <div class="wrap">
+      <p class="cap-en up u1">Countdown</p>
+      <h2 class="cap-cn up u1">婚礼倒计时</h2>
+      <svg class="orn" viewBox="0 0 104 12" aria-hidden="true"><path d="M0 6 H38 M66 6 H104 M43 6 q9 -8 18 0 q-9 8 -18 0"/><circle cx="52" cy="6" r="2"/></svg>
+      <div class="count" aria-live="polite">
+        <div class="cd up u1"><b id="cd-d">—</b><span>天</span></div>
+        <div class="cd up u2"><b id="cd-h">—</b><span>时</span></div>
+        <div class="cd up u3"><b id="cd-m">—</b><span>分</span></div>
+        <div class="cd up u4"><b id="cd-s">—</b><span>秒</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 邀请函 -->
+  <section class="ch" data-i="2">
+    <div class="wrap">
+      <p class="cap-en up u1">Invitation</p>
+      <h2 class="cap-cn up u1">邀请函</h2>
+      <svg class="orn" viewBox="0 0 104 12" aria-hidden="true"><path d="M0 6 H38 M66 6 H104 M43 6 q9 -8 18 0 q-9 8 -18 0"/><circle cx="52" cy="6" r="2"/></svg>
+      <div class="letter up u2">
+        <p class="mk">❦</p>
+        <p class="rl"><i>春去秋来，我们相识、相知、相爱，</i></p>
+        <p class="rl"><i>终于要在亲友的祝福中携手一生。</i></p>
+        <p class="rl"><i>谨定于 <b>2026年10月1日（星期四）</b>，</i></p>
+        <p class="rl"><i>假座 <b>杭州 · 西湖国宾馆 宴会厅</b> 举办婚礼，</i></p>
+        <p class="rl"><i>恭请您拨冗光临，与我们共享这份喜悦。</i></p>
+        <p class="sign">—— 陈嘉铭 · 林语晴 敬邀 ——</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 影像 -->
+  <section class="ch" data-i="3">
+    <div class="wrap">
+      <p class="cap-en up u1">Our Moments</p>
+      <h2 class="cap-cn up u1">我们的时光</h2>
+      <div class="gal">
+        <!--
+          ✏️ 修改处：把照片放进 images/ 目录，命名 photo1.jpg ~ photo6.jpg
+          缺图时自动生成同色系占位纹理，不会破版。
+        -->
+        <div class="stage">
+          <div class="matte" aria-hidden="true"></div>
+          <div class="frame up u2" id="frame">
+            <canvas id="gl2" aria-hidden="true"></canvas>
+          </div>
+        </div>
+        <p class="gcap up u3" id="gcap">初见 · 2021 春</p>
+        <div class="gdots up u3" id="gdots" aria-hidden="true"></div>
+        <p class="ghint up u4">继续滚动 · 翻阅</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 婚礼信息 -->
+  <section class="ch" data-i="4">
+    <div class="wrap">
+      <p class="cap-en up u1">Details</p>
+      <h2 class="cap-cn up u1">婚礼信息</h2>
+      <svg class="orn" viewBox="0 0 104 12" aria-hidden="true"><path d="M0 6 H38 M66 6 H104 M43 6 q9 -8 18 0 q-9 8 -18 0"/><circle cx="52" cy="6" r="2"/></svg>
+      <div class="g2">
+        <div class="info up u2">
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+          <h3>婚礼时间</h3>
+          <!-- ✏️ 修改处：时间 -->
+          <p class="big">2026年10月1日</p>
+          <p>10:58 宾客入席<br>11:58 婚礼仪式</p>
+        </div>
+        <div class="info up u3">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <h3>婚礼地点</h3>
+          <!-- ✏️ 修改处：地点与导航链接 -->
+          <p class="big">杭州 · 西湖国宾馆</p>
+          <p>浙江省杭州市西湖区杨公堤18号<br>宴会厅 · 一层</p>
+          <a class="btn" href="https://map.qq.com/m/search/1/%E8%A5%BF%E6%B9%96%E5%9B%BD%E5%AE%BE%E9%A6%86" target="_blank" rel="noopener">导航前往</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 当日流程 -->
+  <section class="ch" data-i="5">
+    <div class="wrap">
+      <p class="cap-en up u1">Schedule</p>
+      <h2 class="cap-cn up u1">当日流程</h2>
+      <svg class="orn" viewBox="0 0 104 12" aria-hidden="true"><path d="M0 6 H38 M66 6 H104 M43 6 q9 -8 18 0 q-9 8 -18 0"/><circle cx="52" cy="6" r="2"/></svg>
+      <div class="tl up u2" id="tl">
+        <svg viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path id="tlp" d="M6 0 V100"/></svg>
+        <div class="stp"><time>10:00</time><h4>宾客签到</h4><p>签到合影，领取喜糖与伴手礼</p></div>
+        <div class="stp"><time>10:58</time><h4>宾客入席</h4><p>请按引导入座，静候仪式开始</p></div>
+        <div class="stp"><time>11:58</time><h4>婚礼仪式</h4><p>见证我们交换戒指、许下誓言</p></div>
+        <div class="stp"><time>12:30</time><h4>婚宴开始</h4><p>举杯同庆，共享喜宴</p></div>
+        <div class="stp"><time>14:00</time><h4>敬酒 · 合影</h4><p>与新人合影留念，留下美好瞬间</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 回执 -->
+  <section class="ch" data-i="6">
+    <div class="wrap">
+      <p class="cap-en up u1">R.S.V.P.</p>
+      <h2 class="cap-cn up u1">敬候佳音</h2>
+      <div class="rsvp up u2">
+        <svg class="rings" viewBox="0 0 92 54" aria-hidden="true">
+          <circle cx="34" cy="27" r="19"/><circle cx="58" cy="27" r="19" style="stroke:var(--rose)"/>
+        </svg>
+        <p>为方便安排席位，若您能拨冗出席，</p>
+        <p>烦请提前告知，我们不胜感激。</p>
+        <div class="tels">
+          <!-- ✏️ 修改处：联系方式 -->
+          <a class="tel" href="tel:13800000000"><small>新郎</small>138-0000-0000</a>
+          <a class="tel" href="tel:13900000000"><small>新娘</small>139-0000-0000</a>
+        </div>
+        <p class="fin"><span class="h">♥</span>陈嘉铭 &amp; 林语晴 · 2026.10.01<br>期待与您相见</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 滚动容器（决定文档高度） -->
+<div id="spacer"></div>
+
+<!-- 常驻 UI -->
+<div id="bar"></div>
+<div id="ticks" aria-hidden="true"></div>
+<p id="hint">SCROLL TO BEGIN</p>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   ✏️ 修改处：婚礼时间（倒计时基准）  new Date(年, 月-1, 日, 时, 分)
+   ══════════════════════════════════════════════════════════════════════════ */
+var WEDDING = new Date(2026, 9, 1, 11, 58, 0);
+
+/* ✏️ 修改处：照片与配文（顺序与 images/ 内文件对应） */
+var PHOTOS = [
+  {src:'images/photo1.jpg', cap:'初见 · 2021 春'},
+  {src:'images/photo2.jpg', cap:'同行 · 2022 夏'},
+  {src:'images/photo3.jpg', cap:'日常 · 2023 秋'},
+  {src:'images/photo4.jpg', cap:'远行 · 2024 冬'},
+  {src:'images/photo5.jpg', cap:'约定 · 2025 春'},
+  {src:'images/photo6.jpg', cap:'此刻 · 2026'}
+];
+
+var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var MOBILE = matchMedia('(max-width: 760px)').matches;
+
+/* 章节滚动权重（影像章节给 3.2 屏，让照片有足够翻阅距离） */
+var CHAPTERS = [
+  {w:1.15}, {w:1.05}, {w:1.25}, {w:3.30}, {w:1.20}, {w:1.35}, {w:1.35}
+];
+
+/* ─────────────────────────────────────────────────────────────────────────
+   1 · 工具
+   ───────────────────────────────────────────────────────────────────────── */
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function smooth(a,b,x){ x=clamp((x-a)/(b-a),0,1); return x*x*(3-2*x); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   2 · 姓名逐字拆分
+   ───────────────────────────────────────────────────────────────────────── */
+(function(){
+  var el = document.querySelector('[data-split]');
+  var t = el.textContent.trim(), h = '';
+  for(var i=0;i<t.length;i++){
+    var c = t[i]==='&' ? '&amp;' : (t[i]===' ' ? '&nbsp;' : t[i]);
+    var k = t[i]==='&' ? ' class="amp"' : '';
+    h += '<span'+k+' style="transition-delay:'+(i*72+180)+'ms">'+c+'</span>';
+  }
+  el.innerHTML = h;
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   3 · 章节刻度 & 照片圆点
+   ───────────────────────────────────────────────────────────────────────── */
+var ticksBox = document.getElementById('ticks');
+for(var i=0;i<CHAPTERS.length;i++) ticksBox.appendChild(document.createElement('i'));
+var TICKS = ticksBox.children;
+
+var dotsBox = document.getElementById('gdots');
+for(var i=0;i<PHOTOS.length;i++) dotsBox.appendChild(document.createElement('i'));
+var DOTS = dotsBox.children;
+
+/* ─────────────────────────────────────────────────────────────────────────
+   4 · 章节窗口计算
+   ───────────────────────────────────────────────────────────────────────── */
+var CHS = [].slice.call(document.querySelectorAll('.ch'));
+var TOTAL = 0, k;
+for(k=0;k<CHAPTERS.length;k++) TOTAL += CHAPTERS[k].w;
+(function(){
+  var cum = 0;
+  for(var i=0;i<CHAPTERS.length;i++){
+    CHAPTERS[i].s = cum / TOTAL;
+    cum += CHAPTERS[i].w;
+    CHAPTERS[i].e = cum / TOTAL;
+  }
+})();
+var OVERLAP = 0.55 / TOTAL;   /* 交叉溶解区 ≈ 半屏滚动 */
+
+var MAXS = 1;                 /* 缓存最大滚动量，避免每帧读取布局 */
+function layout(){
+  var h = TOTAL * innerHeight;
+  document.getElementById('spacer').style.height = h + 'px';
+  MAXS = Math.max(1, h - innerHeight);
+}
+layout();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   5 · WebGL 通用封装
+   ───────────────────────────────────────────────────────────────────────── */
+function makeGL(cv){
+  var gl = null;
+  try{ gl = cv.getContext('webgl',{antialias:false,alpha:false,premultipliedAlpha:false})
+            || cv.getContext('experimental-webgl'); }catch(e){}
+  return gl;
+}
+function shader(gl,type,src){
+  var s = gl.createShader(type);
+  gl.shaderSource(s,src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) return null;
+  return s;
+}
+function program(gl,vs,fs){
+  var v = shader(gl,gl.VERTEX_SHADER,vs), f = shader(gl,gl.FRAGMENT_SHADER,fs);
+  if(!v||!f) return null;
+  var p = gl.createProgram();
+  gl.attachShader(p,v); gl.attachShader(p,f); gl.linkProgram(p);
+  if(!gl.getProgramParameter(p,gl.LINK_STATUS)) return null;
+  return p;
+}
+var VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}';
+function quad(gl,prog){
+  var b = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,b);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog,'a');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+}
+
+/* 共享噪声 GLSL */
+var NOISE = [
+'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}',
+'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);',
+'return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),f.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),f.x),f.y);}',
+'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.04;a*=0.5;}return v;}'
+].join('\n');
+
+/* ─────────────────────────────────────────────────────────────────────────
+   6 · 层 1：流动丝绸（域扭曲 fbm）
+   ───────────────────────────────────────────────────────────────────────── */
+var silk = (function(){
+  var cv = document.getElementById('silk');
+  var gl = makeGL(cv);
+  if(!gl){ cv.classList.add('dead'); return null; }
+
+  var FS = 'precision highp float;uniform vec2 R;uniform float T,P;'+NOISE+
+  'void main(){'+
+    'vec2 uv=gl_FragCoord.xy/R;'+
+    'vec2 p=uv*vec2(R.x/R.y,1.0)*1.5;'+
+    'float t=T*0.045;'+
+    /* 域扭曲：两次 fbm 采样制造丝绸褶皱走向 */
+    'vec2 q=vec2(fbm(p+vec2(0.0,t)),fbm(p+vec2(4.7,-t)+3.1));'+
+    'float f=fbm(p+2.1*q+vec2(t*0.6,0.0));'+
+    /* 香槟金 / 雾玫瑰 / 象牙白 三段色带 */
+    'vec3 ivory=vec3(0.992,0.980,0.964);'+
+    'vec3 blush=vec3(0.964,0.902,0.858);'+
+    'vec3 champ=vec3(0.878,0.746,0.635);'+
+    'vec3 rose =vec3(0.855,0.663,0.635);'+
+    'float shift=0.12*sin(P*6.2831);'+          /* 随章节推进整体偏移色带 */
+    'vec3 col=mix(ivory,blush,smoothstep(0.24,0.66,f+shift));'+
+    'col=mix(col,champ,smoothstep(0.56,0.98,f+shift)*0.72);'+
+    'col=mix(col,rose,smoothstep(0.62,1.06,f+shift*1.6)*0.34);'+
+    /* 丝绸高光：沿褶皱方向的窄反光带 */
+    'float sheen=pow(smoothstep(0.52,0.94,f),3.0);'+
+    'col+=sheen*0.13;'+
+    /* 暗角 */
+    'col*=1.0-0.30*length(uv-0.5);'+
+    'gl_FragColor=vec4(col,1.0);'+
+  '}';
+
+  var prog = program(gl,VS,FS);
+  if(!prog){ cv.classList.add('dead'); return null; }
+  gl.useProgram(prog); quad(gl,prog);
+  var uR = gl.getUniformLocation(prog,'R'),
+      uT = gl.getUniformLocation(prog,'T'),
+      uP = gl.getUniformLocation(prog,'P');
+  var SCALE = MOBILE ? 0.42 : 0.62;    /* 降分辨率渲染再由 CSS 放大，省 GPU */
+
+  function size(){
+    cv.width  = Math.max(2, Math.round(innerWidth  * SCALE));
+    cv.height = Math.max(2, Math.round(innerHeight * SCALE));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  size();
+  return {
+    resize: size,
+    draw: function(t,p){
+      gl.useProgram(prog);
+      gl.uniform2f(uR, cv.width, cv.height);
+      gl.uniform1f(uT, t);
+      gl.uniform1f(uP, p);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+  };
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   7 · 层 2：照片波纹位移转场
+   ───────────────────────────────────────────────────────────────────────── */
+function placeholder(label){
+  var c = document.createElement('canvas');
+  c.width = 600; c.height = 800;
+  var x = c.getContext('2d');
+  var g = x.createLinearGradient(0,0,600,800);
+  g.addColorStop(0,'#f7e9e4'); g.addColorStop(1,'#eedcd3');
+  x.fillStyle = g; x.fillRect(0,0,600,800);
+  x.textAlign = 'center'; x.fillStyle = 'rgba(219,169,162,.9)';
+  x.font = '38px serif'; x.fillText('❀',300,378);
+  x.fillStyle = 'rgba(156,116,66,.75)';
+  x.font = '19px sans-serif'; x.fillText(label,300,424);
+  return c;
+}
+
+var ASSETS = [];       /* {el, aspect} */
+var gal = null;
+
+function initGallery(){
+  var cv = document.getElementById('gl2');
+  var gl = makeGL(cv);
+  if(!gl){ return fallbackGallery(); }
+
+  var FS = 'precision highp float;'+
+  'uniform sampler2D A,B;uniform vec2 R;uniform float M,AR1,AR2,T;'+NOISE+
+  /* object-fit: cover 的 UV 换算 */
+  'vec2 cover(vec2 uv,float ra,float ia){'+
+    'vec2 s = ra>ia ? vec2(1.0, ia/ra) : vec2(ra/ia, 1.0);'+
+    'return (uv-0.5)*s+0.5;}'+
+  'void main(){'+
+    'vec2 uv=gl_FragCoord.xy/R;'+
+    'float ra=R.x/R.y;'+
+    'float bell=sin(M*3.14159265);'+           /* 转场中点位移最大 */
+    /* 持续微呼吸 + 漂移：让照片始终有生命，不僵死（时间驱动） */
+    'float sc1=1.0+0.045*sin(T*0.20);'+
+    'float sc2=1.0+0.045*sin(T*0.20+2.1);'+
+    'vec2 drift1=vec2(0.015*sin(T*0.17),0.011*cos(T*0.13));'+
+    'vec2 drift2=vec2(0.015*sin(T*0.15+1.0),0.011*cos(T*0.11+0.6));'+
+    /* 位移场：低频 fbm 团块 + 高频水波（调柔，呈布料感而非故障） */
+    'float n=fbm(uv*3.0+vec2(M*1.6,T*0.05));'+
+    'float wave=sin(uv.y*22.0-M*8.0)*0.5+0.5;'+
+    'float d=((n-0.5)*0.30+(wave-0.5)*0.075)*bell;'+
+    'vec2 off=vec2(d,d*0.42);'+
+    'vec2 base=uv-0.5;'+
+    'vec2 u1=cover(base*sc1+0.5+drift1+off,ra,AR1);'+
+    'vec2 u2=cover(base*sc2+0.5+drift2-off*0.7,ra,AR2);'+
+    'vec4 a=texture2D(A,clamp(u1,0.001,0.999));'+
+    'vec4 b=texture2D(B,clamp(u2,0.001,0.999));'+
+    'float m=smoothstep(0.0,1.0,M);'+
+    'vec3 col=mix(a.rgb,b.rgb,m);'+
+    'col+=bell*0.05;'+                         /* 转场瞬间轻微提亮，光掠过 */
+    /* 边缘渐晕：让照片柔化融入画框，弱化硬边 */
+    'float vig=smoothstep(1.15,0.32,length(uv-0.5));'+
+    'col*=mix(0.86,1.0,vig);'+
+    'gl_FragColor=vec4(col,1.0);'+
+  '}';
+
+  var prog = program(gl,VS,FS);
+  if(!prog){ return fallbackGallery(); }
+  gl.useProgram(prog); quad(gl,prog);
+
+  var uR=gl.getUniformLocation(prog,'R'), uM=gl.getUniformLocation(prog,'M'),
+      uT=gl.getUniformLocation(prog,'T'),
+      uA1=gl.getUniformLocation(prog,'AR1'), uA2=gl.getUniformLocation(prog,'AR2'),
+      uA=gl.getUniformLocation(prog,'A'), uB=gl.getUniformLocation(prog,'B');
+
+  var texes = [];
+  for(var i=0;i<ASSETS.length;i++){
+    var t = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D,t);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+    try{
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,ASSETS[i].el);
+    }catch(e){ return fallbackGallery(); }
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    texes.push(t);
+  }
+
+  function size(){
+    var r = cv.getBoundingClientRect();
+    var dpr = Math.min(devicePixelRatio||1, 2);
+    cv.width  = Math.max(2, Math.round(r.width  * dpr));
+    cv.height = Math.max(2, Math.round(r.height * dpr));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  size();
+
+  gal = {
+    resize:size,
+    draw:function(idx,m,t){
+      var n = texes.length;
+      var i1 = clamp(idx,0,n-1), i2 = clamp(idx+1,0,n-1);
+      gl.useProgram(prog);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,texes[i1]); gl.uniform1i(uA,0);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,texes[i2]); gl.uniform1i(uB,1);
+      gl.uniform2f(uR,cv.width,cv.height);
+      gl.uniform1f(uM,m);
+      gl.uniform1f(uT,t);
+      gl.uniform1f(uA1,ASSETS[i1].aspect);
+      gl.uniform1f(uA2,ASSETS[i2].aspect);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+  };
+}
+
+/* WebGL 不可用 → 退回图片叠层淡入淡出 */
+function fallbackGallery(){
+  var frame = document.getElementById('frame');
+  var cv = document.getElementById('gl2');
+  if(cv) cv.remove();
+  var imgs = [];
+  for(var i=0;i<ASSETS.length;i++){
+    var im = document.createElement('img');
+    im.src = ASSETS[i].el.src || ASSETS[i].el.toDataURL('image/jpeg',.9);
+    im.alt = PHOTOS[i].cap;
+    frame.appendChild(im); imgs.push(im);
+  }
+  if(imgs[0]) imgs[0].classList.add('show');
+  gal = {
+    resize:function(){},
+    draw:function(idx,m){
+      var cur = m > .5 ? idx+1 : idx;
+      cur = clamp(cur,0,imgs.length-1);
+      for(var i=0;i<imgs.length;i++) imgs[i].classList.toggle('show', i===cur);
+    }
+  };
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   8 · 资源预载（驱动载入进度环）
+   ───────────────────────────────────────────────────────────────────────── */
+(function preload(){
+  var ring = document.getElementById('ring'),
+      txt  = document.getElementById('loadTxt'),
+      done = 0, need = PHOTOS.length;
+
+  function bump(){
+    done++;
+    var pct = Math.round(done/need*100);
+    ring.style.strokeDashoffset = String(226 - 226*done/need);
+    txt.textContent = pct + '%';
+    if(done >= need) ready();
+  }
+  for(var i=0;i<need;i++){
+    (function(i){
+      var im = new Image();
+      im.onload = function(){
+        ASSETS[i] = {el:im, aspect: im.naturalWidth/im.naturalHeight};
+        bump();
+      };
+      im.onerror = function(){
+        var c = placeholder(PHOTOS[i].src.split('/').pop());
+        ASSETS[i] = {el:c, aspect: 0.75};
+        bump();
+      };
+      im.src = PHOTOS[i].src;
+    })(i);
+  }
+
+  function ready(){
+    initGallery();
+    var env = document.getElementById('env');
+    env.classList.add('ready');
+    txt.textContent = '轻触开启';
+    txt.classList.add('blink');
+    var fired = false;
+    function go(){
+      if(fired) return; fired = true;
+      env.classList.add('open');
+      setTimeout(function(){
+        document.getElementById('loader').classList.add('gone');
+        document.body.classList.remove('lock');
+        scrollTo(0,0);
+        setTimeout(function(){ document.getElementById('loader').remove(); }, 1200);
+      }, REDUCE ? 60 : 1050);
+    }
+    env.addEventListener('click', go);
+    env.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); }
+    });
+  }
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   9 · 倒计时
+   ───────────────────────────────────────────────────────────────────────── */
+(function(){
+  var f = {d:document.getElementById('cd-d'),h:document.getElementById('cd-h'),
+           m:document.getElementById('cd-m'),s:document.getElementById('cd-s')}, prev={};
+  function pad(n){ return n<10?'0'+n:''+n; }
+  function put(k,v){
+    if(prev[k]===v) return; prev[k]=v;
+    var el=f[k]; el.textContent=v;
+    if(REDUCE) return;
+    el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip');
+  }
+  function tick(){
+    var g = WEDDING - Date.now();
+    if(g<=0){ put('d','0');put('h','00');put('m','00');put('s','00'); return; }
+    put('d',String(Math.floor(g/864e5)));
+    put('h',pad(Math.floor(g/36e5)%24));
+    put('m',pad(Math.floor(g/6e4)%60));
+    put('s',pad(Math.floor(g/1e3)%60));
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   10 · 主循环：惯性滚动 → 章节溶解 → 丝绸 → 画廊
+   ───────────────────────────────────────────────────────────────────────── */
+var lerped = 0, tPrev = 0, gcap = document.getElementById('gcap'),
+    bar = document.getElementById('bar'), hint = document.getElementById('hint'),
+    tlp = document.getElementById('tlp'), steps = document.querySelectorAll('.stp'),
+    capNow = -1, dotNow = -1, tickNow = -1, hintOff = false;
+
+function loop(ms){
+  requestAnimationFrame(loop);
+  var t = ms * 0.001;
+
+  /* — 惯性：目标滚动位置 lerp 逼近，制造重量感 — */
+  var target = window.pageYOffset || document.documentElement.scrollTop || 0;
+  lerped += (target - lerped) * (REDUCE ? 1 : 0.085);
+  if(Math.abs(target - lerped) < 0.15) lerped = target;
+
+  var p = clamp(lerped / MAXS, 0, 1);
+
+  bar.style.width = (p*100).toFixed(2) + '%';
+  if(!hintOff && p > 0.015){ hint.classList.add('off'); hintOff = true; }
+
+  /* — 章节交叉溶解 — */
+  var best = 0, bestA = -1;
+  for(var i=0;i<CHAPTERS.length;i++){
+    var c = CHAPTERS[i], a = 0, dir = 0;
+    if(p < c.s){ a = (p - (c.s - OVERLAP)) / OVERLAP; dir = 1; }
+    else if(p > c.e){ a = ((c.e + OVERLAP) - p) / OVERLAP; dir = -1; }
+    else { a = 1; }
+    a = clamp(a, 0, 1);
+    var el = CHS[i];
+    if(a <= 0.001){
+      if(el.style.visibility !== 'hidden'){
+        el.style.visibility = 'hidden'; el.style.opacity = '0';
+        el.classList.remove('act','on');
+      }
+    }else{
+      el.style.visibility = 'visible';
+      el.style.opacity = a.toFixed(3);
+      var e = 1 - a;
+      el.style.transform = 'translate3d(0,'+(dir*e*54).toFixed(1)+'px,0) scale('+(1-e*0.05).toFixed(4)+')';
+      if(a > 0.55) el.classList.add('on');
+      if(a > bestA){ bestA = a; best = i; }
+    }
+  }
+  for(var j=0;j<CHS.length;j++) CHS[j].classList.toggle('act', j===best);
+
+  if(best !== tickNow){
+    if(tickNow>-1) TICKS[tickNow].classList.remove('on');
+    TICKS[best].classList.add('on'); tickNow = best;
+  }
+
+  /* — 影像章节：局部进度驱动波纹转场 — */
+  var g = CHAPTERS[3];
+  var glp = clamp((p - g.s) / (g.e - g.s), 0, 1);
+  if(gal && bestA > 0 && p > g.s - OVERLAP && p < g.e + OVERLAP){
+    var n = ASSETS.length;
+    var f = clamp((glp - 0.06) / 0.86, 0, 1) * (n - 1);
+    var idx = Math.min(Math.floor(f), n - 2);
+    var raw = f - idx;
+    var m = smooth(0.22, 0.78, raw);        /* 中间留停顿，两端做转场 */
+    gal.draw(idx, m, t);
+    var shown = m > 0.5 ? idx+1 : idx;
+    if(shown !== capNow){
+      capNow = shown;
+      gcap.style.opacity = '0';
+      gcap.style.transform = 'translateY(8px)';
+      setTimeout(function(){
+        if(capNow === shown) gcap.textContent = PHOTOS[shown].cap;
+        gcap.style.opacity = '1';
+        gcap.style.transform = 'translateY(0)';
+      }, 220);
+    }
+    if(shown !== dotNow){
+      if(dotNow>-1) DOTS[dotNow].classList.remove('on');
+      DOTS[shown].classList.add('on'); dotNow = shown;
+    }
+  }
+
+  /* — 流程章节：路径随进度描绘 + 节点逐个点亮 — */
+  var s6 = CHAPTERS[5];
+  var slp = clamp((p - s6.s) / (s6.e - s6.s), 0, 1);
+  var draw = clamp((slp - 0.10) / 0.62, 0, 1);
+  if(tlp) tlp.style.strokeDashoffset = (100 - 100*draw).toFixed(2);
+  for(var q=0;q<steps.length;q++){
+    steps[q].classList.toggle('lit', draw > (q+0.35)/steps.length);
+  }
+
+  /* — 丝绸背景（移动端隔帧渲染省电） — */
+  if(silk){
+    if(!MOBILE || (ms - tPrev) > 32){
+      tPrev = ms;
+      silk.draw(REDUCE ? 12 : t, p);
+    }
+  }
+}
+requestAnimationFrame(loop);
+
+/* ─────────────────────────────────────────────────────────────────────────
+   11 · 尺寸变化
+   ───────────────────────────────────────────────────────────────────────── */
+var rt;
+addEventListener('resize', function(){
+  clearTimeout(rt);
+  rt = setTimeout(function(){
+    layout();
+    if(silk) silk.resize();
+    if(gal) gal.resize();
+  }, 140);
+}, {passive:true});
+</script>
+</body>
+</html>
